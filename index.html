@@ -25,109 +25,111 @@
   <!-- Buttons will Get Dumped Here -->
   <div id="buttons-view"></div>
 
+  <div class="row mt-3">
   <form id="search-form">
-    <label for="movie-input">Add Giphy</label>
+    <label for="giphy-input">Add Giphy</label>
     <input type="text" id="giphy-input">
-    <!-- Button triggers new movie to be added -->
-    <button id="add-giphy" class="btn btn-success" type="submit" value="submit">Submit</button>
+    <!-- Button triggers new giphy to be added -->
+    
+        <button id="add-giphy" class="btn btn-success" type="submit" value="submit">Submit</button>
+    </div>
   </form>
 
   <div class="row">
-    <div id="content" class="col"></div>
+    <div id="content" class="col-md-12 mt-5 mb-5"></div>
   </div>
 </div>
 
 <script type="text/javascript">
 
-  var giphyArr = ["Pokemon", "Spongebob", "Chuck Norris", "Cat Facts"];
+var giphyArr = ["Pokemon", "Spongebob", "Chuck Norris", "Cat Facts"];
 
-  // Function for dumping the JSON content for each button into the div
-  function displayGiphy() {
+// Function for dumping the JSON content for each button into the div
+function displayGiphy() {
+  $('#content').empty();
 
-    // when user presses a giphy button, search and display giphy
-        event.preventDefault();
-        var searchQuery = $(this).attr('data-name');
-        console.log(searchQuery);
+  // when user presses a giphy button, search and display giphy
+      event.preventDefault();
+      var searchQuery = $(this).attr('data-name');
+      console.log(searchQuery);
 
-        var apiKey = 'FYvzSNBBiaOqf3rAD8ALeaoV0S69Qi29'
-        var apiRoute = `https://api.giphy.com/v1/gifs/search?api_key=${apiKey}&q=${searchQuery}&limit=25&offset=0&rating=G&lang=en`;
+      var apiKey = 'FYvzSNBBiaOqf3rAD8ALeaoV0S69Qi29';
+      var apiRoute = `https://api.giphy.com/v1/gifs/search?api_key=${apiKey}&q=${searchQuery}&limit=25&offset=0&rating=G&lang=en`;
 
-        $.get({
-          url: apiRoute
-        }).done(function(response) {
-          var currentRow;
-          for (var i = 0; i < response.data.length; i++) {
-              if (i % 4 == 0) {
-                  currentRow = $("<div>");
-                  currentRow.addClass("row");
-                  $("#content").append(currentRow);
-              }
-              var div = $("<div>");
-              div.addClass("col-xs-4");
-              var tempImg = $("<img>");
-              tempImg.attr("src", response.data[i].images.fixed_height.url);
-              div.append(tempImg);
-              $(currentRow).append(div);
-          }
-      }); // end done function
-  }; // end displayGiphy
+      $.get({
+        url: apiRoute
+      }).done(function(response) {
+        console.log(response);
+        var currentRow;
+        for (var i = 0; i < response.data.length; i++) {
+            if (i % 4 == 0) {
+                currentRow = $("<div>");
+                currentRow.addClass("row");
+                $("#content").append(currentRow);
+            }
+            var div = $("<div>");
+            div.addClass("col-md-4");
+            var tempImg = $("<img>");
+            tempImg.attr("src", response.data[i].images.fixed_height.url);
+            div.append(tempImg);
+            $(currentRow).append(div);
+        }
+    }); // end done function
+}; // end displayGiphy
 
-  // Function for displaying movie data
-  function renderButtons() {
+// Function for displaying button data
+function renderButtons() {
 
-    // Deleting the buttons prior to adding new giphyArr
-    // (this is necessary otherwise you will have repeat buttons)
-    $("#buttons-view").empty();
+  // Deleting the buttons prior to adding new giphyArr
+  // (this is necessary otherwise you will have repeat buttons)
+  $("#buttons-view").empty();
 
-    // Looping through the array of giphyArr
-    for (var i = 0; i < giphyArr.length; i++) {
+  // Looping through the array of giphyArr
+  for (var i = 0; i < giphyArr.length; i++) {
 
-      // Then dynamicaly generating buttons for each movie in the array
-      // This code $("<button>") is all jQuery needs to create the beginning and end tag. (<button></button>)
-      var a = $("<button>");
-      // Adding a class of movie to our button
-      a.addClass("giphy btn btn-danger");
-      // Adding a data-attribute
-      a.attr("data-name", giphyArr[i]);
-      // Providing the initial button text
-      a.text(giphyArr[i]);
-      // Adding the button to the buttons-view div
-      $("#buttons-view").append(a);
-    }
-  };
+    // Then dynamicaly generating buttons for each giphy in the array
+    // This code $("<button>") is all jQuery needs to create the beginning and end tag. (<button></button>)
+    var a = $("<button>");
+    // Adding a class of giphy to our button
+    a.addClass("giphy btn btn-danger");
+    // Adding a data-attribute
+    a.attr("data-name", giphyArr[i]);
+    // Providing the initial button text
+    a.text(giphyArr[i]);
+    // Adding the button to the buttons-view div
+    $("#buttons-view").append(a);
+  }
+};
 
-  // This function handles events where one button is clicked
-  $("#add-giphy").on("click", function (event) {
-    event.preventDefault();
+// This function handles events where one button is clicked
+$("#add-giphy").on("click", function (event) {
+  event.preventDefault();
 
-    // This line grabs the input from the textbox
-    var text = $("#giphy-input").val().trim();
+  // This line grabs the input from the textbox
+  var text = $("#giphy-input").val().trim();
 
-    // prevent user to add the same button
-    if (text === '') {
-      $('#title').text('Nothing to add because it\'s blank!');
+  // prevent user to add the same button
+  if (text === '') {
+    $('#title').text('Nothing to add because it\'s blank!');
 
-    } else if (giphyArr.includes(text)) {
-      $('#title').text(`${text} already exists!`);
-      console.log('Button already exists');
-    } else {
-      // The movie from the textbox is then added to our array
-      giphyArr.push(text);
-    }
+  } else if (giphyArr.includes(text)) {
+    $('#title').text(`${text} already exists!`);
+    console.log('Button already exists');
+  } else {
+    // The giphy from the textbox is then added to our array
+    giphyArr.push(text);
+  }
 
-
-    // Calling renderButtons which handles the processing of our movie array
-    renderButtons();
-
-  });
-
-  // Generic function for displaying the movieInfo
-  $(document).on("click", ".giphy", displayGiphy);
-
-  // Calling the renderButtons function to display the intial buttons
+  // Calling renderButtons which handles the processing of our giphy array
   renderButtons();
+}); // end add giphy on click
+
+// Generic function for displaying the giphy images
+$(document).on("click", ".giphy", displayGiphy);
+
+// Calling the renderButtons function to display the intial buttons
+renderButtons();
+
 </script>
-
 </body>
-
 </html>
