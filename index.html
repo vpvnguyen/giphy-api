@@ -49,32 +49,32 @@ function displayGiphy() {
   $('#content').empty();
 
   // when user presses a giphy button, search and display giphy
-      event.preventDefault();
-      var searchQuery = $(this).attr('data-name');
-      console.log(`Search Query: ${searchQuery}`);
+    event.preventDefault();
+    var searchQuery = $(this).attr('data-name');
+    console.log(`Search Query: ${searchQuery}`);
 
-      var apiKey = 'FYvzSNBBiaOqf3rAD8ALeaoV0S69Qi29';
-      var apiRoute = `https://api.giphy.com/v1/gifs/search?api_key=${apiKey}&q=${searchQuery}&limit=25&offset=0&rating=G&lang=en`;
+    var apiKey = 'FYvzSNBBiaOqf3rAD8ALeaoV0S69Qi29';
+    var apiRoute = `https://api.giphy.com/v1/gifs/search?api_key=${apiKey}&q=${searchQuery}&limit=25&offset=0&rating=G&lang=en`;
 
-      // async get method; call giphy api
-      $.get({
-        url: apiRoute
-      }).done(function(response) {
-        console.log(response);
-        var currentRow;
-        for (var i = 0; i < response.data.length; i++) {
-            if (i % 3 == 0) {
-                currentRow = $("<div>");
-                currentRow.addClass("row mb-3");
-                $("#content").append(currentRow);
-            }
-            var div = $("<div>");
-            div.addClass("col-md-4");
-            var tempImg = $("<img>");
-            tempImg.attr("src", response.data[i].images.fixed_height.url);
-            div.append(tempImg);
-            $(currentRow).append(div);
-        }
+    // async get method; call giphy api
+    $.get({
+      url: apiRoute
+    }).done(function(response) {
+      console.log(response);
+      var currentRow;
+      for (var i = 0; i < response.data.length; i++) {
+          if (i % 3 == 0) {
+              currentRow = $("<div>");
+              currentRow.addClass("row mb-3");
+              $("#content").append(currentRow);
+          }
+          var div = $("<div>");
+          div.addClass("col-md-4");
+          var tempImg = $("<img>");
+          tempImg.attr("src", response.data[i].images.fixed_height.url);
+          div.append(tempImg);
+          $(currentRow).append(div);
+      }
     }); // end done function
 }; // end displayGiphy
 
@@ -82,14 +82,12 @@ function displayGiphy() {
 function renderButtons() {
 
   // Deleting the buttons prior to adding new giphyArr
-  // (this is necessary otherwise you will have repeat buttons)
   $("#buttons-view").empty();
 
   // Looping through the array of giphyArr
   for (var i = 0; i < giphyArr.length; i++) {
 
     // Then dynamicaly generating buttons for each giphy in the array
-    // This code $("<button>") is all jQuery needs to create the beginning and end tag. (<button></button>)
     var a = $("<button>");
     // Adding a class of giphy to our button
     a.addClass("giphy btn btn-danger");
