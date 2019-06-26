@@ -42,6 +42,7 @@
 
 <script type="text/javascript">
 
+// array to hold giphy buttons
 var giphyArr = ["Pokemon", "Spongebob", "Chuck Norris", "Cat Facts"];
 
 // Function for dumping the JSON content for each button into the div
@@ -51,11 +52,12 @@ function displayGiphy() {
   // when user presses a giphy button, search and display giphy
       event.preventDefault();
       var searchQuery = $(this).attr('data-name');
-      console.log(searchQuery);
+      console.log(`Search Query: ${searchQuery}`);
 
       var apiKey = 'FYvzSNBBiaOqf3rAD8ALeaoV0S69Qi29';
       var apiRoute = `https://api.giphy.com/v1/gifs/search?api_key=${apiKey}&q=${searchQuery}&limit=25&offset=0&rating=G&lang=en`;
 
+      // async get method; call giphy api
       $.get({
         url: apiRoute
       }).done(function(response) {
@@ -105,13 +107,12 @@ function renderButtons() {
 $("#add-giphy").on("click", function (event) {
   event.preventDefault();
 
-  // This line grabs the input from the textbox
+  // get user input from text box
   var text = $("#giphy-input").val().trim();
 
-  // prevent user to add the same button
+  // prevent user from adding blank or same buttons
   if (text === '') {
     $('#title').text('Nothing to add because it\'s blank!');
-
   } else if (giphyArr.includes(text)) {
     $('#title').text(`${text} already exists!`);
     console.log('Button already exists');
