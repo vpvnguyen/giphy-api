@@ -29,7 +29,7 @@
     <label for="movie-input">Add Giphy</label>
     <input type="text" id="giphy-input">
     <!-- Button triggers new movie to be added -->
-    <button id="add-movie" class="btn btn-success" type="submit" value="submit">Submit</button>
+    <button id="add-giphy" class="btn btn-success" type="submit" value="submit">Submit</button>
   </form>
 
   <div class="row">
@@ -39,15 +39,38 @@
 
 <script type="text/javascript">
 
-  var giphyArr = ["The Matrix", "The Notebook", "Mr. Nobody", "The Lion King"];
+  var giphyArr = ["Pokemon", "Spongebob", "Chuck Norris", "Cat Facts"];
 
   // Function for dumping the JSON content for each button into the div
   function displayGiphy() {
 
-    // YOUR CODE GOES HERE!!! HINT: You will need to create a new div to hold the JSON.
-    $('#content').append(`<div> yo`);
+    // when user presses a giphy button, search and display giphy
+        event.preventDefault();
+        var searchQuery = $(this).attr('data-name');
+        console.log(searchQuery);
 
-  }
+        var apiKey = 'FYvzSNBBiaOqf3rAD8ALeaoV0S69Qi29'
+        var apiRoute = `https://api.giphy.com/v1/gifs/search?api_key=${apiKey}&q=${searchQuery}&limit=25&offset=0&rating=G&lang=en`;
+
+        $.get({
+          url: apiRoute
+        }).done(function(response) {
+          var currentRow;
+          for (var i = 0; i < response.data.length; i++) {
+              if (i % 4 == 0) {
+                  currentRow = $("<div>");
+                  currentRow.addClass("row");
+                  $("#content").append(currentRow);
+              }
+              var div = $("<div>");
+              div.addClass("col-xs-4");
+              var tempImg = $("<img>");
+              tempImg.attr("src", response.data[i].images.fixed_height.url);
+              div.append(tempImg);
+              $(currentRow).append(div);
+          }
+      }); // end done function
+  }; // end displayGiphy
 
   // Function for displaying movie data
   function renderButtons() {
@@ -71,17 +94,20 @@
       // Adding the button to the buttons-view div
       $("#buttons-view").append(a);
     }
-  }
+  };
 
   // This function handles events where one button is clicked
-  $("#add-movie").on("click", function (event) {
+  $("#add-giphy").on("click", function (event) {
     event.preventDefault();
 
     // This line grabs the input from the textbox
     var text = $("#giphy-input").val().trim();
 
     // prevent user to add the same button
-    if (giphyArr.includes(text)) {
+    if (text === '') {
+      $('#title').text('Nothing to add because it\'s blank!');
+
+    } else if (giphyArr.includes(text)) {
       $('#title').text(`${text} already exists!`);
       console.log('Button already exists');
     } else {
