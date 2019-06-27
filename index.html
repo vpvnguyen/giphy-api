@@ -26,13 +26,15 @@
   <div id="buttons-view"></div>
 
   <div class="row mt-3">
-  <form id="search-form">
-    <label for="giphy-input">Add Giphy</label>
-    <input type="text" id="giphy-input">
-    <!-- Button triggers new giphy to be added -->
-    <button id="add-giphy" class="btn btn-success" type="submit" value="submit">Submit</button>
-    </div>
-  </form>
+    <div class="col-xs-12 ml-3">
+      <form id="search-form">
+        <input type="text" id="giphy-input" placeholder="Add Giphy">
+        <!-- Button triggers new giphy to be added -->
+        <button id="add-giphy" class="btn btn-success" type="submit" value="submit">Submit</button>
+        </div>
+      </form>
+  </div>
+
 
   <!-- <img src="https://media1.giphy.com/media/3o85xkQpyMlnBkpB9C/200_s.gif" data-still="https://media1.giphy.com/media/3o85xkQpyMlnBkpB9C/200_s.gif" data-animate="https://media1.giphy.com/media/3o85xkQpyMlnBkpB9C/200.gif" data-state="still" class="gif">
   <img src="https://media2.giphy.com/media/8rFQp4kHXJ0gU/200_s.gif" data-still="https://media2.giphy.com/media/8rFQp4kHXJ0gU/200_s.gif" data-animate="https://media2.giphy.com/media/8rFQp4kHXJ0gU/200.gif" data-state="still" class="gif">
@@ -160,6 +162,8 @@ $("#add-giphy").on("click", function (event) {
 
   // Calling renderButtons which handles the processing of our giphy array
   renderButtons();
+  // clear input field
+  $('#giphy-input').val('');
 }); // end add giphy on click
 
 // Generic function for displaying the giphy images
@@ -171,6 +175,7 @@ renderButtons();
 // TODO:
 // add to localstorage
 // add to firebase
+// make clear button
 
 </script>
 </body>
