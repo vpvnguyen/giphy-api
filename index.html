@@ -78,7 +78,7 @@ function displayGiphy() {
           var div = $("<div>");
           div.addClass("col-sm-4");
           var tempImg = $("<img class='gif m-2'>");
-          tempImg.attr("src", response.data[i].images.fixed_width.url);
+          tempImg.attr("src", response.data[i].images.fixed_width_still.url);
           // data-still="https://media1.giphy.com/media/3o85xkQpyMlnBkpB9C/200_s.gif" data-animate="https://media1.giphy.com/media/3o85xkQpyMlnBkpB9C/200.gif" data-state="still" class="gif">
             // need to figure out fixed_width_small_still 
             // and fixed_height_small for pausing gifs
@@ -89,6 +89,23 @@ function displayGiphy() {
           div.append(tempImg);
           $(currentRow).append(div);
       }
+
+      // if gif is clicked, toggle between animate and still gifs
+      $(".gif").on("click", function() {
+        console.log('clicked img');
+        var state = $(this).attr('data-state');
+        console.log(state);
+
+        if (state === 'still') {
+          var animate = $(this).attr('data-animate');
+          $(this).attr('src', animate);
+          var ani = $(this).attr('data-state', 'animate')
+        } else if (state === 'animate') {
+          var still = $(this).attr('data-still');
+          $(this).attr('src', still);
+          $(this).attr('data-state', 'still');
+        }
+      });
     }); // end done function
 }; // end displayGiphy
 
@@ -142,30 +159,9 @@ $(document).on("click", ".giphy", displayGiphy);
 // Calling the renderButtons function to display the intial buttons
 renderButtons();
 
-
-// this function works if html is commented out above
-// need to figure out why it is not switching between attributes for src
-$(document).ready(function() {
-  $(".gif").on("click", function() {
-    console.log('clicked img');
-    var state = $(this).attr('data-state');
-    console.log(state);
-
-    if (state === 'still') {
-      var animate = $(this).attr('data-animate');
-      $(this).attr('src', animate);
-      var ani = $(this).attr('data-state', 'animate')
-    } else if (state === 'animate') {
-      var still = $(this).attr('data-still');
-      $(this).attr('src', still);
-      $(this).attr('data-state', 'still');
-    }
-  });
-});
-
-
-  // add to localstorage
-  // add to firebase
+// TODO:
+// add to localstorage
+// add to firebase
 
 </script>
 </body>
