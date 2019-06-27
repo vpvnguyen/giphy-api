@@ -33,9 +33,11 @@
     <button id="add-giphy" class="btn btn-success" type="submit" value="submit">Submit</button>
     </div>
   </form>
-
+  <img src="https://media1.giphy.com/media/3o85xkQpyMlnBkpB9C/200_s.gif" data-still="https://media1.giphy.com/media/3o85xkQpyMlnBkpB9C/200_s.gif" data-animate="https://media1.giphy.com/media/3o85xkQpyMlnBkpB9C/200.gif" data-state="still" class="gif">
+  <img src="https://media2.giphy.com/media/8rFQp4kHXJ0gU/200_s.gif" data-still="https://media2.giphy.com/media/8rFQp4kHXJ0gU/200_s.gif" data-animate="https://media2.giphy.com/media/8rFQp4kHXJ0gU/200.gif" data-state="still" class="gif">
+  <img src="https://media3.giphy.com/media/W6LbnBigDe4ZG/200_s.gif" data-still="https://media3.giphy.com/media/W6LbnBigDe4ZG/200_s.gif" data-animate="https://media3.giphy.com/media/W6LbnBigDe4ZG/200.gif" data-state="still" class="gif">
   <div class="row">
-    <div id="content" class="col-md-12 mt-5 mb-5 text-center"></div>
+    <div id="content" class="col-xs-12 mt-5 mb-5 text-center"></div>
   </div>
 </div>
 
@@ -60,17 +62,17 @@ function displayGiphy() {
     $.get({
       url: apiRoute
     }).done(function(response) {
-      console.log(response);
+      console.log(response.data);
       var currentRow;
       for (var i = 0; i < response.data.length; i++) {
           if (i % 3 == 0) {
               currentRow = $("<div>");
-              currentRow.addClass("row mb-3");
+              currentRow.addClass("row");
               $("#content").append(currentRow);
           }
           var div = $("<div>");
-          div.addClass("col-md-4");
-          var tempImg = $("<img>");
+          div.addClass("col-sm-4");
+          var tempImg = $("<img class='m-2'>");
           tempImg.attr("src", response.data[i].images.fixed_height.url);
           div.append(tempImg);
           $(currentRow).append(div);
@@ -128,6 +130,25 @@ $(document).on("click", ".giphy", displayGiphy);
 // Calling the renderButtons function to display the intial buttons
 renderButtons();
 
+$(".gif").on("click", function() {
+
+      var state = $(this).attr('data-state');
+      console.log(state);
+
+      if (state === 'still') {
+        var animate = $(this).attr('data-animate');
+        $(this).attr('src', animate);
+        var ani = $(this).attr('data-state', 'animate')
+      } else if (state === 'animate') {
+        var still = $(this).attr('data-still');
+        $(this).attr('src', still);
+        $(this).attr('data-state', 'still');
+      }
+    });
+
+  // need to figure out fixed_width_small_still 
+  // and fixed_height_small for pausing gifs
+  // the source will control which image is being displayed
 </script>
 </body>
 </html>
