@@ -52,6 +52,7 @@ var giphyArr = ["Pokemon", "Spongebob", "Chuck Norris", "Cat Facts"];
 // Function for dumping the JSON content for each button into the div
 function displayGiphy() {
   $('#content').empty();
+  $('#title').text('Loading Gifs...');
 
   // when user presses a giphy button, search and display giphy
     event.preventDefault();
@@ -68,44 +69,52 @@ function displayGiphy() {
       console.log(response.data);
       var currentRow;
 
-      // for all gifs, append 3 images to a row
-      for (var i = 0; i < response.data.length; i++) {
-          if (i % 3 == 0) {
-              currentRow = $("<div>");
-              currentRow.addClass("row");
-              $("#content").append(currentRow);
-          }
-          var div = $("<div>");
-          div.addClass("col-sm-4");
-          var tempImg = $("<img class='gif m-2'>");
-          tempImg.attr("src", response.data[i].images.fixed_width_still.url);
-          // data-still="https://media1.giphy.com/media/3o85xkQpyMlnBkpB9C/200_s.gif" data-animate="https://media1.giphy.com/media/3o85xkQpyMlnBkpB9C/200.gif" data-state="still" class="gif">
-            // need to figure out fixed_width_small_still 
-            // and fixed_height_small for pausing gifs
-            // the source will control which image is being displayed
-          tempImg.attr('data-still', response.data[i].images.fixed_width_still.url)
-          tempImg.attr('data-animate', response.data[i].images.fixed_width.url)
-          tempImg.attr('data-state', 'still')
-          div.append(tempImg);
-          $(currentRow).append(div);
-      }
+          console.log(typeof response.data.length)
 
-      // if gif is clicked, toggle between animate and still gifs
-      $(".gif").on("click", function() {
-        console.log('clicked img');
-        var state = $(this).attr('data-state');
-        console.log(state);
-
-        if (state === 'still') {
-          var animate = $(this).attr('data-animate');
-          $(this).attr('src', animate);
-          var ani = $(this).attr('data-state', 'animate')
-        } else if (state === 'animate') {
-          var still = $(this).attr('data-still');
-          $(this).attr('src', still);
-          $(this).attr('data-state', 'still');
+      if (response.data.length === 0) {
+        $('#title').text('No Gifs Found :(')
+      } else {
+        // for all gifs, append 3 images to a row
+        for (var i = 0; i < response.data.length; i++) {
+            if (i % 3 == 0) {
+                currentRow = $("<div>");
+                currentRow.addClass("row");
+                $("#content").append(currentRow);
+            }
+            var div = $("<div>");
+            div.addClass("col-sm-4");
+            var tempImg = $("<img class='gif m-2'>");
+            tempImg.attr("src", response.data[i].images.fixed_width_still.url);
+            // data-still="https://media1.giphy.com/media/3o85xkQpyMlnBkpB9C/200_s.gif" data-animate="https://media1.giphy.com/media/3o85xkQpyMlnBkpB9C/200.gif" data-state="still" class="gif">
+              // need to figure out fixed_width_small_still 
+              // and fixed_height_small for pausing gifs
+              // the source will control which image is being displayed
+            tempImg.attr('data-still', response.data[i].images.fixed_width_still.url)
+            tempImg.attr('data-animate', response.data[i].images.fixed_width.url)
+            tempImg.attr('data-state', 'still')
+            div.append(tempImg);
+            $(currentRow).append(div);
         }
-      });
+
+        $('#title').text('Click Gifs to Animate!');
+
+        // if gif is clicked, toggle between animate and still gifs
+        $(".gif").on("click", function() {
+          console.log('clicked img');
+          var state = $(this).attr('data-state');
+          console.log(state);
+
+          if (state === 'still') {
+            var animate = $(this).attr('data-animate');
+            $(this).attr('src', animate);
+            var ani = $(this).attr('data-state', 'animate')
+          } else if (state === 'animate') {
+            var still = $(this).attr('data-still');
+            $(this).attr('src', still);
+            $(this).attr('data-state', 'still');
+          }
+        });
+      }
     }); // end done function
 }; // end displayGiphy
 
