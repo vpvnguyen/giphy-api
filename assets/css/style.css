@@ -1,9 +1,30 @@
-body {
+/* responsive background */
+body, html {
+    height: 100%;
     font-family: 'Exo 2', sans-serif;
 }
-.jumbotron{
-    background-color:rgb(171, 226, 43);
+.jumbotron {
+    /* background-image: url("../images/color-explosion.png"); */
+    /* background-size: cover;     */
+    background: none;
+    color: white;
+    font-family: 'Exo 2', sans-serif;
+    font-weight: 700;
+    height: 60px;
+}
+.bg { 
+    background: black;
+    background-image: url("../images/colorful_explosion.jpg");
+    height: 100%; 
+    /* center and scale image */
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 .giphy {
     margin: 5px;
+}
+.line {
+    color: white;
+    padding: 3px;
 }
