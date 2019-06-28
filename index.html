@@ -79,7 +79,7 @@ function displayGiphy() {
             var div = $("<div>");
             div.addClass("col-sm-4");
             var tempImg = $("<img>");
-            tempImg.addClass('gif m-2');
+            tempImg.addClass('gif m-2 border');
             tempImg.attr("src", response.data[i].images.fixed_width_still.url);
             tempImg.attr('data-still', response.data[i].images.fixed_width_still.url)
             tempImg.attr('data-animate', response.data[i].images.fixed_width.url)
@@ -168,7 +168,6 @@ renderButtons();
 // add to firebase
 // make clear button
 // option to add additional gifs while keeping current gifs
-// 
 
 </script>
 </body>
