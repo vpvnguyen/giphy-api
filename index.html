@@ -36,12 +36,6 @@
       </form>
   </div>
 
-
-  <!-- <img src="https://media1.giphy.com/media/3o85xkQpyMlnBkpB9C/200_s.gif" data-still="https://media1.giphy.com/media/3o85xkQpyMlnBkpB9C/200_s.gif" data-animate="https://media1.giphy.com/media/3o85xkQpyMlnBkpB9C/200.gif" data-state="still" class="gif">
-  <img src="https://media2.giphy.com/media/8rFQp4kHXJ0gU/200_s.gif" data-still="https://media2.giphy.com/media/8rFQp4kHXJ0gU/200_s.gif" data-animate="https://media2.giphy.com/media/8rFQp4kHXJ0gU/200.gif" data-state="still" class="gif">
-  <img src="https://media3.giphy.com/media/W6LbnBigDe4ZG/200_s.gif" data-still="https://media3.giphy.com/media/W6LbnBigDe4ZG/200_s.gif" data-animate="https://media3.giphy.com/media/W6LbnBigDe4ZG/200.gif" data-state="still" class="gif">
-  <img class="gif" src="https://media1.giphy.com/media/U2nN0ridM4lXy/200w_s.gif?cid=6c6144ec5d142f33444c4f674d4a7a64&amp;rid=200w_s.gif" data-still="https://media1.giphy.com/media/U2nN0ridM4lXy/200w_s.gif?cid=6c6144ec5d142f33444c4f674d4a7a64&amp;rid=200w_s.gif" data-animate="https://media1.giphy.com/media/U2nN0ridM4lXy/200w.gif?cid=6c6144ec5d142f33444c4f674d4a7a64&amp;rid=200w.gif" data-state="still">
-   -->
   <div class="row">
     <div id="content" class="col-sm-12 mt-5 mb-5 text-center"></div>
   </div>
@@ -84,12 +78,9 @@ function displayGiphy() {
             }
             var div = $("<div>");
             div.addClass("col-sm-4");
-            var tempImg = $("<img class='gif m-2'>");
+            var tempImg = $("<img>");
+            tempImg.addClass('gif m-2');
             tempImg.attr("src", response.data[i].images.fixed_width_still.url);
-            // data-still="https://media1.giphy.com/media/3o85xkQpyMlnBkpB9C/200_s.gif" data-animate="https://media1.giphy.com/media/3o85xkQpyMlnBkpB9C/200.gif" data-state="still" class="gif">
-              // need to figure out fixed_width_small_still 
-              // and fixed_height_small for pausing gifs
-              // the source will control which image is being displayed
             tempImg.attr('data-still', response.data[i].images.fixed_width_still.url)
             tempImg.attr('data-animate', response.data[i].images.fixed_width.url)
             tempImg.attr('data-state', 'still')
