@@ -45,6 +45,19 @@
 
 // array to hold giphy buttons
 var giphyArr = ["Pokemon", "Spongebob", "LOL", "Wow", "Roger That"];
+var saveOption = [];
+
+var count = 4;
+
+// get items from localstorage
+function getSavedOptions() {
+
+  // get items from giphyArr and saveOption from local storage
+  var getSavedOptions = localStorage.getItem('giphy');
+  console.log(`Retrieved saved options from localstorage: ${getSavedOptions}`);
+  saveOption.push(getSavedOptions);
+  console.log(`getSavedOptions() Saved options in localstorage: ${saveOption}`);
+}
 
 // Function for dumping the JSON content for each button into the div
 function displayGiphy() {
@@ -57,17 +70,16 @@ function displayGiphy() {
     console.log(`Search Query: ${searchQuery}`);
 
     var apiKey = 'FYvzSNBBiaOqf3rAD8ALeaoV0S69Qi29';
-    var apiRoute = `https://api.giphy.com/v1/gifs/search?api_key=${apiKey}&q=${searchQuery}&limit=25&offset=0&rating=G&lang=en`;
+    var apiRoute = `https://api.giphy.com/v1/gifs/search?api_key=${apiKey}&q=${searchQuery}&limit=30&offset=0&rating=G&lang=en`;
 
     // async get method; call giphy api
     $.get({
       url: apiRoute
     }).done(function(response) {
-      console.log(response.data);
       var currentRow;
 
       if (response.data.length === 0) {
-        $('#title').text('No Gifs Found :(')
+        $('#title').text('No Gifs Found :(');
       } else {
         // for all gifs, append 3 images to a row
         for (var i = 0; i < response.data.length; i++) {
@@ -81,9 +93,9 @@ function displayGiphy() {
             var tempImg = $("<img>");
             tempImg.addClass('gif m-2 border');
             tempImg.attr("src", response.data[i].images.fixed_width_still.url);
-            tempImg.attr('data-still', response.data[i].images.fixed_width_still.url)
-            tempImg.attr('data-animate', response.data[i].images.fixed_width.url)
-            tempImg.attr('data-state', 'still')
+            tempImg.attr('data-still', response.data[i].images.fixed_width_still.url);
+            tempImg.attr('data-animate', response.data[i].images.fixed_width.url);
+            tempImg.attr('data-state', 'still');
             div.append(tempImg);
             $(currentRow).append(div);
         }
@@ -99,7 +111,7 @@ function displayGiphy() {
           if (state === 'still') {
             var animate = $(this).attr('data-animate');
             $(this).attr('src', animate);
-            var ani = $(this).attr('data-state', 'animate')
+            var ani = $(this).attr('data-state', 'animate');
           } else if (state === 'animate') {
             var still = $(this).attr('data-still');
             $(this).attr('src', still);
@@ -120,35 +132,43 @@ function renderButtons() {
   for (var i = 0; i < giphyArr.length; i++) {
 
     // Then dynamicaly generating buttons for each giphy in the array
-    var a = $("<button>");
+    var createButton = $("<button>");
     // Adding a class of giphy to our button
-    a.addClass("giphy btn btn-danger");
+    createButton.addClass("giphy btn btn-danger");
     // Adding a data-attribute
-    a.attr("data-name", giphyArr[i]);
+    createButton.attr("data-name", giphyArr[i]);
     // Providing the initial button text
-    a.text(giphyArr[i]);
+    createButton.text(giphyArr[i]);
     // Adding the button to the buttons-view div
-    $("#buttons-view").append(a);
+    $("#buttons-view").append(createButton);
   }
 };
 
 // This function handles events where one button is clicked
 $("#add-giphy").on("click", function (event) {
   event.preventDefault();
+  console.log(`localstorage before: ${saveOption}`);
 
-  // get user input from text box
-  var text = $("#giphy-input").val().trim();
+  // get user input
+  var userInput = $("#giphy-input").val().trim();
 
   // prevent user from adding blank or same buttons
-  if (text === '') {
+  if (userInput === '') {
     $('#title').text('Nothing to add because it\'s blank!');
-  } else if (giphyArr.includes(text)) {
-    $('#title').text(`${text} already exists!`);
+  } else if (giphyArr.includes(userInput) || saveOption.includes(userInput) || saveOption === 0) {
+    console.log(`Is user input in save option: ${saveOption.includes(userInput)}`);
+    $('#title').text(`${userInput} already exists!`);
     console.log('Button already exists');
   } else {
     // The giphy from the textbox is then added to our array
-    giphyArr.push(text);
-    $('#title').text(`${text} has been added!`);
+    saveOption.push(userInput);
+
+    console.log(`added to localstorage: ${saveOption}`);
+    $('#title').text(`${userInput} has been added!`);
+
+    // local storage
+    // localStorage.setItem('giphy', JSON.stringify(a));
+    // localStorage.getItem('giphy')
   }
 
   // Calling renderButtons which handles the processing of our giphy array
@@ -161,10 +181,18 @@ $("#add-giphy").on("click", function (event) {
 $(document).on("click", ".giphy", displayGiphy);
 
 // Calling the renderButtons function to display the intial buttons
+getSavedOptions();
+// console.log(`Getting items from localstorage: ${saveOption}`);
 renderButtons();
 
 // TODO:
 // add to localstorage
+// when user loads the page, add current items from array to local storage
+// get items out of local storage and render those items as buttons to dom
+// when user creates a new button, add item to localstorage and render those items as buttons to dom
+// option to add or remove gif buttons
+
+
 // add to firebase
 // make clear button
 // option to add additional gifs while keeping current gifs
