@@ -166,11 +166,13 @@
         // The giphy from the textbox is then added to our array
         saveOption.push(userInput);
         giphyArr.push(userInput);
-        console.log(`added to localstorage: ${saveOption}`);
         $('#title').text(`${userInput} has been added!`);
 
         // local storage
-        // localStorage.setItem('giphy', JSON.stringify(a));
+        localStorage.setItem('giphy', JSON.stringify(saveOption));
+        console.log(`added to localstorage: ${saveOption}`);
+        // NEED TO RETRIVE THIS WHEN USER OPENS PAGE OR REFRESH
+        // WHEN BUTTON IS ADDED MAKE SURE IT CLEARS THE LOCALSTORAGE AND ADD IT BACK TO THE DOM
         // localStorage.getItem('giphy')
       }
 
