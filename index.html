@@ -23,20 +23,20 @@
   <div class="container">
     <h2 id="title" class="jumbotron text-center">Giphy Search</h2>
     <hr class="line">
-    <!-- Buttons will Get Dumped Here -->
+    <!-- display buttons -->
     <div id="buttons-view"></div>
 
     <div class="row mt-3">
       <div class="col-sm-12 ml-3">
         <form id="search-form">
           <input type="text" id="giphy-input" placeholder="Add Giphy">
-          <!-- Button triggers new giphy to be added -->
           <button id="add-giphy" class="btn btn-success" type="submit" value="submit">Submit</button>
       </div>
       </form>
     </div>
 
     <div class="row">
+      <!-- display giphys -->
       <div id="content" class="col-sm-12 mt-5 mb-5 text-center"></div>
     </div>
   </div>
@@ -45,21 +45,16 @@
 
     // array to hold giphy buttons
     var giphyArr = ["Pokemon", "Spongebob", "LOL", "Wow", "Roger That"];
-    var saveOption = [];
-
-    var count = 4;
 
     // get items from localstorage
     function getSavedOptions() {
 
       // get items from giphyArr and saveOption from local storage
-      var getSavedOptions = localStorage.getItem('giphy');
-      console.log(`Retrieved saved options from localstorage: ${getSavedOptions}`);
-      saveOption.push(getSavedOptions);
-      console.log(`getSavedOptions() Saved options in localstorage: ${saveOption}`);
-    }
+      var getSavedGiphyArr = localStorage.getItem('giphy');
+      console.log(`Retrieved saved options from localstorage: ${getSavedGiphyArr}`);
+    };
 
-    // Function for dumping the JSON content for each button into the div
+    // display gifs when button is clicked
     function displayGiphy() {
       $('#content').empty();
       $('#title').text('Loading Gifs...');
@@ -122,12 +117,14 @@
       }); // end done function
     }; // end displayGiphy
 
-    // Function for displaying button data
-    function renderButtons() {
+    // dynamically 
+    function displayButtons() {
 
       // Deleting the buttons prior to adding new giphyArr
       $("#buttons-view").empty();
 
+      getSavedOptions();
+      console.log(`get saved options ${JSON.stringify(giphyArr)}`);
       // Looping through the array of giphyArr
       for (var i = 0; i < giphyArr.length; i++) {
 
@@ -147,10 +144,10 @@
     // This function handles events where one button is clicked
     $("#add-giphy").on("click", function (event) {
       event.preventDefault();
-      console.log(`localstorage before: ${saveOption}`);
+      console.log(`localstorage before: ${giphyArr}`);
 
       // clear out localStorage
-      localStorage.clear();
+      // localStorage.clear('giphy', saveOption);
       console.log('cleared out localstorage');
       // get user input
       var userInput = $("#giphy-input").val().trim();
@@ -158,26 +155,27 @@
       // prevent user from adding blank or same buttons
       if (userInput === '') {
         $('#title').text('Nothing to add because it\'s blank!');
-      } else if (giphyArr.includes(userInput) || saveOption.includes(userInput) || saveOption === 0) {
-        console.log(`Is user input in save option: ${saveOption.includes(userInput)}`);
+      } else if (giphyArr.includes(userInput)) {
+        console.log(`Is user input in save option: ${giphyArr.includes(userInput)}`);
         $('#title').text(`${userInput} already exists!`);
         console.log('Button already exists');
       } else {
+        localStorage.setItem('giphy', JSON.stringify(giphyArr));
+        console.log(`added to localstorage: ${giphyArr}`);
         // The giphy from the textbox is then added to our array
-        saveOption.push(userInput);
         giphyArr.push(userInput);
+        // giphyArr.push(userInput);
         $('#title').text(`${userInput} has been added!`);
 
         // local storage
-        localStorage.setItem('giphy', JSON.stringify(saveOption));
-        console.log(`added to localstorage: ${saveOption}`);
+
         // NEED TO RETRIVE THIS WHEN USER OPENS PAGE OR REFRESH
         // WHEN BUTTON IS ADDED MAKE SURE IT CLEARS THE LOCALSTORAGE AND ADD IT BACK TO THE DOM
         // localStorage.getItem('giphy')
       }
 
-      // Calling renderButtons which handles the processing of our giphy array
-      renderButtons();
+      // Calling displayButtons which handles the processing of our giphy array
+      displayButtons();
       // clear input field
       $('#giphy-input').val('');
     }); // end add giphy on click
@@ -185,19 +183,21 @@
     // Generic function for displaying the giphy images
     $(document).on("click", ".giphy", displayGiphy);
 
-    // Calling the renderButtons function to display the intial buttons
+    // Calling the displayButtons function to display the intial buttons
     getSavedOptions();
     // console.log(`Getting items from localstorage: ${saveOption}`);
-    renderButtons();
+    displayButtons();
 
 // TODO:
 // add to localstorage
-// when user loads the page, add current items from array to local storage
-// get items out of local storage and render those items as buttons to dom
-// when user creates a new button, add item to localstorage and render those items as buttons to dom
+// when user loads the page, check localstorage
+// if storage is null: push giphyArr, get items from localstorage, display buttons
+// if storage isnt null: get items from localstorage, display buttons
+// when user creates a new button, add item to localstorage, display buttons
+
+
+
 // option to add or remove gif buttons
-
-
 // add to firebase
 // make clear button
 // option to add additional gifs while keeping current gifs
