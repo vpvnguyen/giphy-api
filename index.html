@@ -41,6 +41,7 @@
       <div id="content" class="col-sm-12 mt-5 mb-5 text-center"></div>
     </div>
   </div>
+  
 
   <script type="text/javascript">
 
@@ -97,14 +98,24 @@
             }
             var div = $("<div>");
             div.addClass("col-sm-4");
+
+            // create images
+
             var tempImg = $("<img>");
-            tempImg.addClass('gif m-2 border');
+            tempImg.addClass(`gif gif-${i} m-2 border`);
             tempImg.attr("src", response.data[i].images.fixed_width_still.url);
             tempImg.attr('data-still', response.data[i].images.fixed_width_still.url);
             tempImg.attr('data-animate', response.data[i].images.fixed_width.url);
             tempImg.attr('data-state', 'still');
             div.append(tempImg);
+
+            // create ratings
+            var tempText = $('<div>');
+            tempText.addClass('gif-text');
+            tempText.text(`Rating: ${response.data[i].rating.toUpperCase()}`);
+            div.append(tempText);
             $(createRow).append(div);
+
           }
 
           // let user know that gifs can be animated by clicking on them; when gif is clicked, toggle between still and animated sources
