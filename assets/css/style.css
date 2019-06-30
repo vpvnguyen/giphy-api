@@ -18,6 +18,9 @@ body, html {
     font-weight: 700;
     height: 60px;
 }
+#content {
+    color: white;
+}
 .giphy {
     margin: 5px;
 }
