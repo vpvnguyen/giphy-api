@@ -1,25 +1,22 @@
-/* responsive background */
+/* unscrollable background */
 body, html {
     height: 100%;
     font-family: 'Exo 2', sans-serif;
-}
-.jumbotron {
-    /* background-image: url("../images/color-explosion.png"); */
-    /* background-size: cover;     */
-    background: none;
-    color: white;
-    font-family: 'Exo 2', sans-serif;
-    font-weight: 700;
-    height: 60px;
-}
-.bg { 
     background: black;
     background-image: url("../images/colorful_explosion.jpg");
     height: 100%; 
     /* center and scale image */
     background-position: center;
     background-repeat: no-repeat;
+    background-attachment: fixed;
     background-size: cover;
+}
+.jumbotron {
+    background: none;
+    color: white;
+    font-family: 'Exo 2', sans-serif;
+    font-weight: 700;
+    height: 60px;
 }
 .giphy {
     margin: 5px;
