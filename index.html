@@ -46,13 +46,31 @@
     // array to hold giphy buttons
     var giphyArr = ["Pokemon", "Spongebob", "LOL", "Wow", "Roger That"];
 
-    // get items from localstorage
-    function getSavedOptions() {
+    var giphyObj = {
+      giphyArr2: ["Pokemon", "Spongebob", "LOL", "Wow", "Roger That"]
+    }
+    // add to localstorage
+    // when user loads the page, check localstorage
+    // if storage is null: push giphyArr, get items from localstorage, display buttons
+    // if storage isnt null: get items from localstorage, display buttons
+    // when user creates a new button, add item to localstorage, display buttons
 
-      // get items from giphyArr and saveOption from local storage
-      var getSavedGiphyArr = localStorage.getItem('giphy');
-      console.log(`Retrieved saved options from localstorage: ${getSavedGiphyArr}`);
+    // get items from localstorage
+    2
+
+    function getSavedOptions() {
+      var storedArray = JSON.parse(localStorage.getItem("storedArray"));
+
+      if (storedArray === null) {
+        storedArray = ["Pokemon", "Spongebob", "LOL", "Wow", "Roger That"];
+        console.log('getSavedOptions(): storedArray is null, added items into array')
+        localStorage.setItem("storedArray", JSON.stringify(storedArray));
+
+      } else {
+        console.log('getSavedOptions(): got items from storedArray')
+      }
     };
+
 
     // display gifs when button is clicked
     function displayGiphy() {
@@ -122,9 +140,8 @@
 
       // Deleting the buttons prior to adding new giphyArr
       $("#buttons-view").empty();
-
-      getSavedOptions();
-      console.log(`get saved options ${JSON.stringify(giphyArr)}`);
+      console.log('displayButtons()');
+      // console.log(`get saved options ${typeof getSavedGiphyArr}`);
       // Looping through the array of giphyArr
       for (var i = 0; i < giphyArr.length; i++) {
 
@@ -189,11 +206,6 @@
     displayButtons();
 
 // TODO:
-// add to localstorage
-// when user loads the page, check localstorage
-// if storage is null: push giphyArr, get items from localstorage, display buttons
-// if storage isnt null: get items from localstorage, display buttons
-// when user creates a new button, add item to localstorage, display buttons
 
 
 
