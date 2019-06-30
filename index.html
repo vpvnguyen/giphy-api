@@ -21,7 +21,7 @@
 
 <body class="bg">
   <div class="container">
-    <h2 id="title" class="jumbotron text-center">Gif Generator! Start by clicking on a button or add your own!</h2>
+    <h2 id="title" class="jumbotron text-center">Gif Searcher! Start by clicking on a button or add your own!</h2>
     <hr class="line">
     <!-- display buttons -->
     <div id="buttons-view"></div>
@@ -158,7 +158,7 @@
 
       // prevent user from adding blank or same string
       if (userInput === '') {
-        $('#title').text('Nothing to add because it\'s blank!');
+        $('#title').text('Nothing to add! Type something in!');
       } else if (storedArray.includes(userInput)) {
         $('#title').text(`${userInput} already exists!`);
         console.log('Button already exists');
@@ -192,5 +192,4 @@
     displayButtons();
   </script>
 </body>
-
 </html>
