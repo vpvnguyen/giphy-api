@@ -1,18 +1,18 @@
 // default array to hold giphy buttons
-var giphyArr = ['Pokemon', 'Spongebob', 'GoT', 'LOL', 'Wow', 'Mhmm'];
+var topics = ['Pokemon', 'Spongebob', 'GoT', 'LOL', 'Wow', 'Mhmm'];
 
 // when page loads, get and parse items from local storage
-var storedArray = JSON.parse(localStorage.getItem('giphyArr'));
+var storedArray = JSON.parse(localStorage.getItem('topics'));
 
 // get items from localstorage
 function getSavedOptions() {
 
   // get and parse items from localstorage
-  var storedArray = JSON.parse(localStorage.getItem('giphyArr'));
+  var storedArray = JSON.parse(localStorage.getItem('topics'));
 
   // if localstorage is empty, push default options into array
   if (storedArray === null) {
-    localStorage.setItem('giphyArr', JSON.stringify(giphyArr));
+    localStorage.setItem('topics', JSON.stringify(topics));
   } else {
     console.log(`getSavedOptions(): got items from storedArray ${storedArray}`);
   }
@@ -100,7 +100,7 @@ function displayButtons() {
   $('#buttons-view').empty();
 
   // get, parse, loop, and display items in local storage as buttons
-  var storedArray = JSON.parse(localStorage.getItem('giphyArr'));
+  var storedArray = JSON.parse(localStorage.getItem('topics'));
 
   for (var i = 0; i < storedArray.length; i++) {
     var createButton = $('<button>');
@@ -114,7 +114,7 @@ function displayButtons() {
 // when user adds a new giphy button
 $('#add-giphy').on('click', function (event) {
   event.preventDefault();
-  var storedArray = JSON.parse(localStorage.getItem('giphyArr'));
+  var storedArray = JSON.parse(localStorage.getItem('topics'));
 
   // get user input
   var userInput = $('#giphy-input').val().trim();
@@ -141,7 +141,7 @@ $('#add-giphy').on('click', function (event) {
 
     // push userInput into array and save to localstorage
     storedArray.push(userInput);
-    localStorage.setItem('giphyArr', JSON.stringify(storedArray));
+    localStorage.setItem('topics', JSON.stringify(storedArray));
     console.log(`localstorage setItem: ${storedArray}`);
 
     // let user know that a button has been added
