@@ -1,5 +1,5 @@
 // default array to hold giphy buttons
-var giphyArr = ['Pokemon', 'Spongebob', 'LOL', 'Wow', 'Mhmm'];
+var giphyArr = ['Pokemon', 'Spongebob', 'GoT', 'LOL', 'Wow', 'Mhmm'];
 
 // when page loads, get and parse items from local storage
 var storedArray = JSON.parse(localStorage.getItem('giphyArr'));
@@ -53,7 +53,6 @@ function displayGiphy() {
         div.addClass('col-sm-4');
 
         // create images
-
         var tempImg = $('<img>');
         tempImg.addClass(`gif gif-${i} m-2 border`);
         tempImg.attr('src', response.data[i].images.fixed_width_still.url);
@@ -70,7 +69,6 @@ function displayGiphy() {
 
         // add divs to rows
         $(createRow).append(div);
-
       }
 
       // let user know that gifs can be animated by clicking on them; when gif is clicked, toggle between still and animated sources
@@ -121,11 +119,23 @@ $('#add-giphy').on('click', function (event) {
 
   // get user input
   var userInput = $('#giphy-input').val().trim();
+  var userInputToLower = userInput.toLowerCase();
+  console.log(`userInput: ${userInput}`);
+  
+  // make check case insensitive
+  var isItemInArray = false;
+  storedArray.forEach(topicToLower);
+  function topicToLower(item) {
+    item = item.toLowerCase();
+    if (userInputToLower === item) {
+      isItemInArray = true;
+    }
+  }
 
   // prevent user from adding blank or same string
   if (userInput === '') {
     $('#title').text('Nothing to add! Type something in!');
-  } else if (storedArray.includes(userInput)) {
+  } else if (isItemInArray === true) {
     $('#title').text(`${userInput} already exists!`);
     console.log('Button already exists');
   } else {
