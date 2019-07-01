@@ -26,7 +26,7 @@ function displayGiphy() {
 
   // when user presses a giphy button, search and display giphy
   event.preventDefault();
-  var searchQuery = $(this).attr('data-name');
+  var searchQuery = $(this).attr('data-name'); 
   console.log(`Search Query: ${searchQuery}`);
 
   var apiKey = 'FYvzSNBBiaOqf3rAD8ALeaoV0S69Qi29';
@@ -135,8 +135,7 @@ $('#add-giphy').on('click', function (event) {
   if (userInput === '') {
     $('#title').text('Nothing to add! Type something in!');
   } else if (isItemInArray === true) {
-    $('#title').text(`${userInput} already exists!`);
-    console.log('Button already exists');
+    $('#title').text(`That topic already exists!`);
   } else {
 
     // push userInput into array and save to localstorage
