@@ -18,16 +18,15 @@ body, html {
     font-weight: 700;
     height: 80px;
 }
+#add-giphy, #reset-button {
+    font-size: 12px;
+}
 #content {
     color: white;
-    font-size: 22px;
+    font-size: 20px;
 }
 .giphy {
     margin: 5px;
-}
-.line {
-    color: white;
-    padding: 3px;
 }
 .gif-text {
     color: white;
