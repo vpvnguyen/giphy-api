@@ -75,7 +75,6 @@ function displayGiphy() {
       $('#title').text('Click Gifs to Animate!');
       $('.gif').on('click', function () {
         var state = $(this).attr('data-state');
-        console.log('clicked img');
 
         if (state === 'still') {
           var animate = $(this).attr('data-animate');
