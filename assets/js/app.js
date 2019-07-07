@@ -37,6 +37,7 @@ function displayGiphy() {
   $.get({
     url: apiRoute
   }).done(function(response) {
+    console.log(`GIPHY RESPONSE: ${response.data}`);
 
     // if no reponse, let user know nothing was found
     if (response.data.length === 0) {
