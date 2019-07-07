@@ -30,7 +30,8 @@ function displayGiphy() {
   console.log(`Search Query: ${searchQuery}`);
 
   var apiKey = 'FYvzSNBBiaOqf3rAD8ALeaoV0S69Qi29';
-  var apiRoute = `https://api.giphy.com/v1/gifs/search?api_key=${apiKey}&q=${searchQuery}&limit=30&offset=0&rating=G&lang=en`;
+  var imgRating = 'PG-13';
+  var apiRoute = `https://api.giphy.com/v1/gifs/search?api_key=${apiKey}&q=${searchQuery}&limit=30&offset=0&rating=${imgRating}&lang=en`;
 
   // async get method; call giphy api
   $.get({
@@ -62,10 +63,10 @@ function displayGiphy() {
         div.append(tempImg);
 
         // create ratings
-        var tempText = $('<div>');
-        tempText.addClass('gif-text');
-        tempText.text(`Rating: ${response.data[i].rating.toUpperCase()}`);
-        div.append(tempText);
+        // var tempText = $('<div>');
+        // tempText.addClass('gif-text');
+        // tempText.text(`Rating: ${response.data[i].rating.toUpperCase()}`);
+        // div.append(tempText);
 
         // add divs to rows
         $(createRow).append(div);
