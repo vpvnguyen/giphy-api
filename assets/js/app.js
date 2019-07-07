@@ -32,12 +32,12 @@ function displayGiphy() {
   var apiKey = 'FYvzSNBBiaOqf3rAD8ALeaoV0S69Qi29';
   var imgRating = 'PG-13';
   var apiRoute = `https://api.giphy.com/v1/gifs/search?api_key=${apiKey}&q=${searchQuery}&limit=30&offset=0&rating=${imgRating}&lang=en`;
-
+  console.log(`API ROUTE: ${apiRoute}`);
   // async get method; call giphy api
   $.get({
     url: apiRoute
   }).done(function(response) {
-    console.log(`GIPHY RESPONSE: ${response.data}`);
+    console.log(`GIPHY RESPONSE: ${JSON.stringify(response.data)}`);
 
     // if no reponse, let user know nothing was found
     if (response.data.length === 0) {
